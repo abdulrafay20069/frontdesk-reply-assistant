@@ -1,39 +1,70 @@
 # FrontDesk Reply Assistant
 
-I built this to explore how AI fits into a real human workflow — specifically the loop of "customer asks something, someone writes a reply." The AI handles the first draft; a person reviews and approves every reply before it goes anywhere.
+A tool that reads customer emails, writes a first draft reply using AI, and waits for a human to click "approve" before anything actually gets sent. Because we're not quite ready to let an AI autonomously email customers with a straight face.
+
+Built as a portfolio project to explore what "AI-assisted" should actually look like in a real workflow — helpful enough to save time, restrained enough to not embarrass anyone.
+
+---
 
 ## Live Demo
 
-[URL] · Login: `admin@frontdesk.dev` / `FrontDesk2024!`
+**Frontend:** [add URL after deploy]
+**Login:** `admin@frontdesk.dev` / `FrontDesk2024!`
 
-## Stack
+> Heads up — the backend runs on Render's free tier, which puts the server to sleep after 15 minutes of inactivity. If you're the first visitor in a while, the login might take 30-60 seconds while the server wakes up, stretches, and asks what year it is. Everything after that is fast.
 
-- **Backend:** Java 17, Spring Boot 3, PostgreSQL, Flyway, JJWT
-- **Frontend:** React 18, TypeScript, Vite, TailwindCSS, React Query, Zustand
-- **AI:** Groq API (llama-3.3-70b-versatile)
-- **Deploy:** Railway (backend + DB), Vercel (frontend)
+---
+
+## The Idea
+
+Small businesses get the same customer questions on repeat. "What are your hours?" "Can I return this?" "Do you ship to Alaska?" Answering each one from scratch is a slow tax on someone's day.
+
+This app takes the inquiry, has an AI draft a reply in the business's own tone, and drops it in a workspace where a human can edit, approve, and send. The AI never sends anything on its own — which is both a safety feature and, honestly, the whole point.
+
+---
 
 ## What It Does
 
-- Manages incoming customer inquiries with status tracking from receipt to reply
-- Generates first-draft replies grounded in a configurable business profile (name, tone, FAQ context)
-- Enforces human approval before any reply is marked sent — the AI has no autonomous send path
-- Logs every action (draft generated, edited, approved, sent) to an auditable activity trail
+- **Inbox** — All customer inquiries in one list, filtered by status (New, Drafted, Approved, Sent, Failed)
+- **One-click AI drafts** — Grounded in a configurable business profile (name, tone, FAQ context)
+- **Editable before sending** — Because AI is confident but not always correct
+- **Activity log** — Every draft, edit, approval, and send is recorded automatically
+- **Configurable tone** — Warm & Friendly, Formal & Professional, or Direct & Efficient. Change it once, every future draft follows suit.
+
+---
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Backend | Java 17, Spring Boot 3, Maven |
+| Database | PostgreSQL 16, Flyway migrations |
+| Auth | JWT (in-memory, no localStorage) |
+| Frontend | React 18, TypeScript, Vite, TailwindCSS |
+| State | React Query (server), Zustand (auth session) |
+| AI | Groq API (`llama-3.3-70b-versatile`) |
+| Hosting | Render (backend + Postgres), Vercel (frontend) |
+
+---
 
 ## Running Locally
 
 ### Prerequisites
 
-- Docker (for Postgres)
 - Java 17
-- Node 18+
 - Maven 3.9+
-- A Groq API key — free at [console.groq.com](https://console.groq.com)
+- Node 18+
+- PostgreSQL 16 installed directly on Windows or Mac (Docker is optional and honestly a pain on older Windows)
+- A free Groq API key from [console.groq.com](https://console.groq.com)
 
-### 1. Start Postgres
+### 1. Set Up the Database
+
+Install PostgreSQL 16. During install, set the password to something you'll remember. Then create a database called `frontdesk`:
+
+Open pgAdmin → right-click Databases → Create → Database → name it `frontdesk` → Save.
+
+### 2. Backend
 
 ```bash
-docker-compose up -d
-
-
-Note: The backend is hosted on Render's free tier. If the app has been idle, the first login may take up to a minute while the server wakes up. Subsequent requests are fast.
+cd backend
+cp src/main/resources/application.yml.example src/main/resources/application.yml
