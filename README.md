@@ -34,3 +34,6 @@ I built this to explore how AI fits into a real human workflow — specifically 
 
 ```bash
 docker-compose up -d
+
+
+Note: The backend is hosted on Render's free tier. If the app has been idle, the first login may take up to a minute while the server wakes up. Subsequent requests are fast.
