@@ -10,7 +10,7 @@ function ProtectedRoute() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f11]">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="md:ml-60 pb-20 md:pb-0 min-h-screen">
         <Outlet />

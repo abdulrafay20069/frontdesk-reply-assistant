@@ -12,17 +12,17 @@ function InquiryCard({ inquiry }: { inquiry: InquirySummary }) {
   return (
     <Link
       to={`/inquiries/${inquiry.id}`}
-      className="block bg-surface border border-border-subtle rounded-lg p-4 hover:border-accent transition-colors duration-150"
+      className="block bg-surface border border-border-subtle rounded-lg p-3 hover:border-accent transition-colors duration-150"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-text-primary truncate">
+          <p className="text-[13px] font-medium text-text-primary truncate leading-tight">
             {inquiry.customerName}
           </p>
-          <p className="text-[13px] text-text-secondary mt-1 line-clamp-2">
+          <p className="text-[13px] text-text-secondary mt-1 line-clamp-2 leading-tight">
             {preview}
           </p>
-          <p className="text-xs text-text-muted mt-2">
+          <p className="text-[11px] text-text-muted mt-2">
             {formatRelativeTime(inquiry.receivedAt)}
           </p>
         </div>

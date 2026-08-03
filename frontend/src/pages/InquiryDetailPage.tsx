@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useInquiry } from '../features/inquiries/hooks'
@@ -85,22 +86,22 @@ function InquiryDetailPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background p-4 md:p-6 animate-pulse">
-        <div className="h-4 bg-[#222228] rounded w-24 mb-8" />
+        <div className="h-4 bg-surface-elevated rounded w-24 mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           <div className="md:col-span-2 space-y-4">
-            <div className="bg-[#1a1a1f] border border-[#2e2e36] rounded-lg p-6 space-y-4">
-              <div className="h-5 bg-[#222228] rounded w-3/4" />
-              <div className="h-4 bg-[#222228] rounded w-full" />
-              <div className="h-4 bg-[#222228] rounded w-2/3" />
+            <div className="bg-surface border border-border rounded-lg p-6 space-y-4">
+              <div className="h-5 bg-surface-elevated rounded w-3/4" />
+              <div className="h-4 bg-surface-elevated rounded w-full" />
+              <div className="h-4 bg-surface-elevated rounded w-2/3" />
             </div>
           </div>
           <div className="md:col-span-3 space-y-4">
-            <div className="bg-[#1a1a1f] border border-[#2e2e36] rounded-lg p-6">
-              <div className="h-32 bg-[#222228] rounded w-full" />
+            <div className="bg-surface border border-border rounded-lg p-6">
+              <div className="h-32 bg-surface-elevated rounded w-full" />
             </div>
             <div className="flex gap-3">
-              <div className="bg-[#222228] rounded h-8 w-24" />
-              <div className="bg-[#222228] rounded h-8 w-24" />
+              <div className="bg-surface-elevated rounded h-8 w-24" />
+              <div className="bg-surface-elevated rounded h-8 w-24" />
             </div>
           </div>
         </div>
@@ -124,7 +125,7 @@ function InquiryDetailPage() {
       {/* Back link */}
       <Link
         to="/inbox"
-        className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6"
+        className="inline-flex items-center gap-1 text-[13px] text-text-secondary hover:text-text-primary transition-colors mb-6"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -142,7 +143,7 @@ function InquiryDetailPage() {
               </h2>
               <StatusBadge status={inquiry.status} />
             </div>
-            <p className="text-sm text-text-primary leading-relaxed whitespace-pre-wrap">
+            <p className="text-[13px] text-text-primary leading-relaxed whitespace-pre-wrap">
               {inquiry.messageText}
             </p>
 
@@ -169,7 +170,7 @@ function InquiryDetailPage() {
               <div className="flex flex-col items-center justify-center py-12">
                 {inquiry.status === 'FAILED' && (
                   <div className="w-full mb-6 p-4 border border-error/50 rounded-lg bg-error/5">
-                    <p className="text-sm text-error">
+                    <p className="text-[13px] text-error">
                       The AI generation failed. Please try again.
                     </p>
                   </div>
@@ -178,19 +179,32 @@ function InquiryDetailPage() {
                 <button
                   onClick={handleGenerateDraft}
                   disabled={isGenerating}
-                  className="px-6 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+                  className="px-6 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-60 text-white text-[13px] font-medium rounded-lg transition-colors"
                 >
-                  {isGenerating ? cyclingMessages[cycleIndex] : 'Generate Draft'}
+                  {isGenerating ? (
+                    <span className="inline-flex items-center gap-2">
+                      <span className="draft-dot" />
+                      <span className="draft-dot" />
+                      <span className="draft-dot" />
+                      <span>{cyclingMessages[cycleIndex]}</span>
+                    </span>
+                  ) : (
+                    'Generate Draft'
+                  )}
                 </button>
-                <p className="mt-3 text-xs text-text-muted text-center max-w-xs">
-                  The AI will compose a draft reply based on the inquiry and your business profile.
+                <p className="mt-3 text-[11px] text-text-muted text-center max-w-xs">
+                  Draft a reply using your saved tone.
                 </p>
               </div>
             )}
 
             {/* State: DRAFTED — editable textarea */}
             {(inquiry.status === 'DRAFTED' || inquiry.status === 'APPROVED') && reply && (
-              <div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+              >
                 <textarea
                   value={draftText}
                   onChange={(e) => {
@@ -206,7 +220,7 @@ function InquiryDetailPage() {
                       <button
                         onClick={handleSaveDraft}
                         disabled={!draftChanged || updateDraftMutation.isPending}
-                        className="px-4 py-1.5 bg-surface-elevated border border-border-subtle hover:border-accent text-text-primary text-sm font-medium rounded-lg transition-colors disabled:opacity-40"
+                        className="px-4 py-1.5 bg-surface-elevated border border-border-subtle hover:border-accent text-text-primary text-[13px] font-medium rounded-lg transition-colors disabled:opacity-40"
                       >
                         {updateDraftMutation.isPending ? 'Saving...' : 'Save Draft'}
                       </button>
@@ -215,7 +229,7 @@ function InquiryDetailPage() {
                       <button
                         onClick={handleApprove}
                         disabled={approveReplyMutation.isPending}
-                        className="px-4 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+                        className="px-4 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-60 text-white text-[13px] font-medium rounded-lg transition-colors"
                       >
                         {approveReplyMutation.isPending ? 'Approving...' : 'Approve'}
                       </button>
@@ -224,13 +238,13 @@ function InquiryDetailPage() {
                       <button
                         onClick={handleSend}
                         disabled={sendReplyMutation.isPending}
-                        className="px-4 py-1.5 bg-success hover:opacity-90 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+                        className="px-4 py-1.5 bg-success hover:opacity-90 disabled:opacity-60 text-white text-[13px] font-medium rounded-lg transition-colors"
                       >
                         {sendReplyMutation.isPending ? 'Sending...' : 'Send'}
                       </button>
                     )}
                   </div>
-                  <span className="text-xs text-text-muted">
+                  <span className="text-[11px] text-text-muted">
                     {draftText.length} characters
                   </span>
                 </div>
@@ -241,7 +255,7 @@ function InquiryDetailPage() {
                     Last edited {reply.generatedAt ? formatRelativeTime(reply.generatedAt) : ''}
                   </p>
                 )}
-              </div>
+              </motion.div>
             )}
 
             {/* State: SENT — read-only */}
@@ -249,15 +263,27 @@ function InquiryDetailPage() {
               <div>
                 {/* Checkmark */}
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.24, ease: 'easeOut' }}
+                    className="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center"
+                  >
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M3 7.5L6 10.5L11 4" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M3 7.5L6 10.5L11 4" stroke="#6ee7a3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </div>
-                  <span className="text-sm font-medium text-success">Reply sent</span>
+                  </motion.div>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.18, delay: 0.1, ease: 'easeOut' }}
+                    className="text-[13px] font-medium text-success"
+                  >
+                    Reply sent
+                  </motion.span>
                 </div>
 
-                <div className="w-full px-4 py-3 bg-surface-elevated border border-border-subtle rounded-lg text-sm text-text-primary resize-none opacity-70">
+                <div className="w-full px-4 py-3 bg-surface-elevated border border-border-subtle rounded-lg text-[13px] text-text-primary resize-none opacity-70">
                   {draftText}
                 </div>
 
@@ -269,7 +295,7 @@ function InquiryDetailPage() {
 
                 <Link
                   to="/inbox"
-                  className="inline-block mt-6 px-4 py-2 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors"
+                  className="inline-block mt-6 px-4 py-2 bg-accent hover:bg-accent-hover text-white text-[13px] font-medium rounded-lg transition-colors"
                 >
                   Back to Inbox
                 </Link>

@@ -17,7 +17,7 @@ function LoginPage() {
     setLoading(true)
 
     try {
-      const res = await client.post('/api/auth/login', { email, password })
+      const res = await client.post('/auth/login', { email, password })
       const { token, userId, email: userEmail, fullName, role } = res.data
       login({ id: userId, email: userEmail, fullName, role }, token)
       navigate('/inbox', { replace: true })
@@ -31,34 +31,34 @@ function LoginPage() {
 
   return (
     <>
-      <div className="relative flex min-h-screen items-center justify-center bg-[#0f0f11] overflow-hidden">
+      <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden">
         {/* Blob top-right */}
         <div
           className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-20 animate-blob"
           style={{
-            background: 'radial-gradient(circle, #7c6af7 0%, transparent 70%)',
+            background: 'radial-gradient(circle, #d4a574 0%, transparent 70%)',
           }}
         />
         {/* Blob bottom-left */}
         <div
           className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-20 animate-blob animation-delay-5000"
           style={{
-            background: 'radial-gradient(circle, #7c6af7 0%, transparent 70%)',
+            background: 'radial-gradient(circle, #d4a574 0%, transparent 70%)',
           }}
         />
 
         {/* Card */}
         <div className="relative w-full max-w-[400px] mx-4">
-          <div className="bg-[#1a1a1f] border border-[#2e2e36] rounded-2xl p-8 shadow-xl">
+          <div className="bg-surface border border-border rounded-2xl p-8 shadow-xl">
             {/* Monogram */}
             <div className="text-center mb-6">
-              <span className="text-3xl font-semibold text-[#7c6af7]">FD</span>
+              <span className="text-3xl font-semibold text-accent">FD</span>
             </div>
 
             {/* Title */}
-            <h1 className="text-center text-2xl font-semibold text-[#f0f0f4]">FrontDesk</h1>
-            <p className="text-center text-sm text-[#8b8b9e] mt-1 mb-8">
-              AI-assisted replies for your front desk.
+            <h1 className="text-center text-2xl font-semibold text-text-primary">FrontDesk</h1>
+            <p className="text-center text-[13px] text-text-secondary mt-1 mb-8">
+              Reply faster. Sound like yourself.
             </p>
 
             {/* Form */}
@@ -72,7 +72,7 @@ function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-2.5 bg-[#222228] border border-[#2e2e36] rounded-lg text-[#f0f0f4] text-sm placeholder-[#55555f] focus:outline-none focus:ring-2 focus:ring-[#7c6af7] focus:border-transparent transition-shadow"
+                  className="w-full px-4 py-2.5 bg-surface-elevated border border-border rounded-lg text-text-primary text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-shadow"
                 />
               </div>
               <div>
@@ -84,18 +84,18 @@ function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-2.5 bg-[#222228] border border-[#2e2e36] rounded-lg text-[#f0f0f4] text-sm placeholder-[#55555f] focus:outline-none focus:ring-2 focus:ring-[#7c6af7] focus:border-transparent transition-shadow"
+                  className="w-full px-4 py-2.5 bg-surface-elevated border border-border rounded-lg text-text-primary text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-shadow"
                 />
               </div>
 
               {error && (
-                <p className="text-sm text-[#f87171]">{error}</p>
+                <p className="text-[13px] text-error">{error}</p>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-[#7c6af7] hover:bg-[#9585f8] disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+                className="w-full py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-60 text-white text-[13px] font-medium rounded-lg transition-colors"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>

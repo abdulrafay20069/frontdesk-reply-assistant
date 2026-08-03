@@ -71,13 +71,13 @@ function SettingsPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background p-4 md:p-6 animate-pulse">
-        <div className="mx-auto max-w-[640px] space-y-6">
-          <div className="h-6 bg-[#222228] rounded w-48" />
-          <div className="h-4 bg-[#222228] rounded w-72" />
-          <div className="h-12 bg-[#222228] rounded-lg w-full" />
-          <div className="h-20 bg-[#222228] rounded-lg w-full" />
-          <div className="h-24 bg-[#222228] rounded-lg w-full" />
-          <div className="h-40 bg-[#222228] rounded-lg w-full" />
+        <div className="mx-auto max-w-[640px] space-y-4">
+          <div className="h-6 bg-surface-elevated rounded w-48" />
+          <div className="h-4 bg-surface-elevated rounded w-72" />
+          <div className="h-12 bg-surface-elevated rounded-lg w-full" />
+          <div className="h-20 bg-surface-elevated rounded-lg w-full" />
+          <div className="h-24 bg-surface-elevated rounded-lg w-full" />
+          <div className="h-40 bg-surface-elevated rounded-lg w-full" />
         </div>
       </div>
     )
@@ -87,11 +87,11 @@ function SettingsPage() {
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="mx-auto max-w-[640px]">
         <h1 className="text-2xl font-semibold text-text-primary">Business Profile</h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          Configure how the AI represents your business.
+        <p className="mt-1 text-[13px] text-text-secondary">
+          How the AI writes on your behalf.
         </p>
 
-        <div className="mt-8 space-y-6">
+        <div className="mt-6 space-y-4">
           {/* Business Name */}
           <div>
             <label className="block text-sm font-medium text-text-primary mb-1.5">
@@ -100,7 +100,7 @@ function SettingsPage() {
             <input
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
-              className="w-full px-3 py-2 bg-surface-elevated border border-border-subtle rounded-lg text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+              className="w-full px-3 py-2 bg-surface-elevated border border-border-subtle rounded-lg text-[13px] text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
 
@@ -119,7 +119,7 @@ function SettingsPage() {
 
           {/* Tone */}
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-3">
+            <label className="block text-[13px] font-medium text-text-primary mb-3">
               Tone
             </label>
             <div className="flex gap-3">
@@ -128,15 +128,15 @@ function SettingsPage() {
                   key={opt.value}
                   type="button"
                   onClick={() => setTone(opt.value)}
-                  className={`flex-1 p-4 rounded-xl border text-left transition-all duration-150 ${
+                  className={`flex-1 p-3 rounded-xl border text-left transition-all duration-150 ${
                     tone === opt.value
-                      ? 'border-[#7c6af7] bg-[#1c1a2e]'
-                      : 'border-border-subtle bg-surface hover:border-accent/50'
+                      ? 'border-accent bg-[rgba(212,165,116,0.12)]'
+                      : 'border-border bg-surface hover:border-accent/50'
                   }`}
                 >
-                  <p className="text-sm font-medium text-text-primary">{opt.label}</p>
-                  <p className="text-xs text-text-secondary mt-1">{opt.description}</p>
-                  <p className="text-xs text-text-muted italic mt-1">{opt.example}</p>
+                  <p className="text-[13px] font-medium text-text-primary">{opt.label}</p>
+                  <p className="text-[11px] text-text-secondary mt-1">{opt.description}</p>
+                  <p className="text-[11px] text-text-muted italic mt-1">{opt.example}</p>
                 </button>
               ))}
             </div>
@@ -160,7 +160,7 @@ function SettingsPage() {
           <button
             onClick={handleSave}
             disabled={updateMutation.isPending}
-            className={`px-6 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+            className={`px-6 py-2.5 text-[13px] font-medium rounded-lg transition-colors ${
               saved
                 ? 'bg-success/20 text-success'
                 : 'bg-accent hover:bg-accent-hover text-white disabled:opacity-60'

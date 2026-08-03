@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useInquiries } from '../features/inquiries/hooks'
 import InquiryCard from '../components/InquiryCard'
@@ -24,18 +25,18 @@ function InboxPage() {
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-semibold text-text-primary">Inbox</h1>
         <button
           onClick={() => setDrawerOpen(true)}
-          className="px-4 py-2 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors"
+          className="px-4 py-2 bg-accent hover:bg-accent-hover text-white text-[13px] font-medium rounded-lg transition-colors"
         >
           + New Inquiry
         </button>
       </div>
 
       {/* Status tabs */}
-      <div className="flex gap-1 border-b border-border-subtle mb-6 overflow-x-auto">
+      <div className="flex gap-1 border-b border-border-subtle mb-4 overflow-x-auto">
         {statusTabs.map((tab) => {
           const isActive = tab.value === activeStatus
           const count =
@@ -46,13 +47,13 @@ function InboxPage() {
             <button
               key={tab.label}
               onClick={() => setActiveStatus(tab.value)}
-              className={`relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`relative px-4 py-2 text-[13px] font-medium whitespace-nowrap transition-colors ${
                 isActive ? 'text-accent' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               {tab.label}
               {count !== undefined && (
-                <span className="ml-1.5 text-xs text-text-muted">({count})</span>
+                <span className="ml-1.5 text-[11px] text-text-muted">({count})</span>
               )}
               {isActive && (
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
@@ -78,7 +79,14 @@ function InboxPage() {
           ))}
         </div>
       ) : (
-        <EmptyState message="No inquiries found." />
+        <motion.div
+          key={activeStatus ?? 'all'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.18 }}
+        >
+          <EmptyState message="No inquiries." />
+        </motion.div>
       )}
 
       {/* New Inquiry Drawer */}

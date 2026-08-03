@@ -1,3 +1,4 @@
+import { Activity, Inbox, LogOut, Settings } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 
@@ -12,25 +13,28 @@ export function Navbar() {
   }
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `flex items-center px-4 py-2.5 rounded-lg text-sm transition-colors ${
+    `flex items-center px-4 py-2.5 rounded-lg text-[13px] transition-colors ${
       isActive
-        ? 'bg-[#222228] text-[#f0f0f4] border-l-2 border-[#7c6af7]'
-        : 'text-[#8b8b9e] hover:bg-[#222228] hover:text-[#f0f0f4]'
+        ? 'bg-surface-elevated text-text-primary border-l-2 border-accent'
+        : 'text-text-secondary hover:bg-surface-elevated hover:text-text-primary'
     }`
 
   const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `flex flex-col items-center justify-center gap-1 flex-1 h-full text-xs ${
-      isActive ? 'text-[#7c6af7]' : 'text-[#8b8b9e]'
+    `flex flex-col items-center justify-center gap-1 flex-1 h-full text-[11px] ${
+      isActive ? 'text-accent' : 'text-text-secondary'
     }`
 
   return (
     <>
-      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-60 bg-[#1a1a1f] border-r border-[#2e2e36] flex-col z-40">
-        <div className="p-6 flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#7c6af7] flex items-center justify-center text-white font-bold text-sm">
-            FD
+      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-60 bg-surface border-r border-border flex-col z-40">
+        <div className="p-4 flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" strokeWidth="1.5" stroke="#ececf0">
+              <path d="M3 7l9 6 9-6M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M3 7l2-2h14l2 2" />
+              <path d="M9 13l2 2 4-4" stroke="#d4a574" />
+            </svg>
           </div>
-          <span className="text-[#f0f0f4] font-semibold">FrontDesk</span>
+          <span className="text-text-primary font-semibold">FrontDesk</span>
         </div>
 
         <nav className="flex-1 px-3 flex flex-col gap-1">
@@ -45,29 +49,30 @@ export function Navbar() {
           </NavLink>
         </nav>
 
-        <div className="p-4 border-t border-[#2e2e36]">
-          <div className="text-sm text-[#f0f0f4]">{user?.fullName}</div>
-          <div className="text-xs text-[#8b8b9e] mb-2">{user?.email}</div>
+        <div className="p-4 border-t border-border">
+          <div className="text-[13px] text-text-primary">{user?.fullName}</div>
+          <div className="text-[11px] text-text-secondary mb-2">{user?.email}</div>
           <button
             onClick={handleLogout}
-            className="text-xs text-[#8b8b9e] hover:text-[#f87171] transition-colors"
+            className="flex items-center gap-1.5 text-[11px] text-text-secondary hover:text-error transition-colors"
           >
-            Log out
+            <LogOut size={16} strokeWidth={1.5} />
+            <span>Log out</span>
           </button>
         </div>
       </aside>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#1a1a1f] border-t border-[#2e2e36] flex items-center justify-around z-40">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-border flex items-center justify-around z-40">
         <NavLink to="/inbox" className={mobileLinkClass}>
-          <span>📥</span>
+          <Inbox size={18} strokeWidth={1.5} />
           <span>Inbox</span>
         </NavLink>
         <NavLink to="/settings" className={mobileLinkClass}>
-          <span>⚙</span>
+          <Settings size={18} strokeWidth={1.5} />
           <span>Settings</span>
         </NavLink>
         <NavLink to="/activity-log" className={mobileLinkClass}>
-          <span>📋</span>
+          <Activity size={18} strokeWidth={1.5} />
           <span>Activity</span>
         </NavLink>
       </nav>

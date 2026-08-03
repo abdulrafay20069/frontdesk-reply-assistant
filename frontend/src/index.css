@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 5px; border: 2px solid #0c0c0e; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
+
+*:focus-visible {
+  outline: 2px solid #d4a574;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(212, 165, 116, 0.3);
+  color: #ececf0;
+}
+
+body {
+  background-color: #0c0c0e;
+  background-image:
+    radial-gradient(at 15% 10%, rgba(212, 165, 116, 0.02) 0px, transparent 60%),
+    radial-gradient(at 85% 90%, rgba(212, 165, 116, 0.015) 0px, transparent 60%);
+  background-attachment: fixed;
+}
+
 @keyframes blob-drift {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -23,4 +47,30 @@
 
 .animation-delay-5000 {
   animation-delay: 5s;
+}
+
+@keyframes draft-dot-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.draft-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #d4a574;
+  animation: draft-dot-pulse 0.9s ease-in-out infinite;
+}
+
+.draft-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.draft-dot:nth-child(3) {
+  animation-delay: 0.3s;
 }
