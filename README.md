@@ -6,10 +6,11 @@ A tool that reads customer messages, drafts a reply using AI, and waits for a hu
 
 ## Live Demo
 
-Coming soon. Login when live: `admin@frontdesk.dev` / `FrontDesk2024!`
 
-> Note: The backend runs on a free tier that sleeps after 15 minutes of inactivity. If you are the first visitor in a while, the login takes about 30 seconds while the server wakes up. Everything after is fast.
+**Website:** [https://frontdesk-reply-assistant.vercel.app](https://frontdesk-reply-assistant.vercel.app)  
+**Login:** `admin@frontdesk.dev` / `FrontDesk2024!`
 
+> **Note:** The backend is hosted on Render's free tier, which puts the server to sleep after 15 minutes of inactivity. If you're the first visitor in a while, the initial request or login might take 20–30 seconds while the server wakes up. Everything after that is fast.
 ---
 
 ## Screenshots
